@@ -18,6 +18,10 @@ describe('A basic hand', function() {
     hand.cardPool[0].toString().should.equal('As');
     return hand.cardPool[6].toString().should.equal('2h');
   });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['Kh', 'Tc', '5d', 'As', '3c', '3s', '2h']);
+    return should(hand).have.property('combo');
+  });
   return it('should return a correct description', function() {
     var hand = Hand.solve(['Kh', 'Tc', '5d', 'As', '3c', '3s', '2h']);
     return hand.descr.should.equal('Pair, 3\'s');
@@ -29,6 +33,10 @@ describe('A Straight Flush', function() {
     var hand = new StraightFlush(['Qd', '7s', '8s', 'Js', 'Kh', 'Ts', '9s'], gameForTest);
     return hand.isPossible.should.equal(true);
   });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['Qd', '7s', '8s', 'Js', 'Kh', 'Ts', '9s']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(5);
+  });
   return it('should be detected as not possible', function() {
     var hand = new StraightFlush(['Qd', '7s', '8s', 'Js', 'Kh', 'Ts', '9d'], gameForTest);
     return hand.isPossible.should.equal(false);
@@ -39,6 +47,10 @@ describe('A Four of a Kind', function() {
   it('should be detected as possible', function() {
     var hand = new FourOfAKind(['7h', '7d', '3s', '2c', '7s', '7c', '4s'], gameForTest);
     return hand.isPossible.should.equal(true);
+  });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['7h', '7d', '3s', '2c', '7s', '7c', '4s']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(4);
   });
   return it('should be detected as not possible', function() {
     var hand = new FourOfAKind(['7h', '3d', '3s', '2c', '7s', '7c', '4s'], gameForTest);
@@ -52,6 +64,10 @@ describe('A Full House', function() {
     hand.isPossible.should.equal(true);
     hand = new FullHouse(['9c', '9d', 'Jh', 'Jc', 'Js', '9h', 'As'], gameForTest);
     return hand.isPossible.should.equal(true);
+  });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['Qd', 'Js', '3h', 'Qc', '7d', 'Jc', 'Jd']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(5);
   });
   it('should be detected as not possible', function() {
     var hand = new FullHouse(['5h', '3h', '3c', '5d', '2s', 'Ts', 'Td'], gameForTest);
@@ -77,6 +93,10 @@ describe('A Flush', function() {
     var hand = new Flush(['4h', 'Th', '5h', 'Ac', '2h', 'Kh', '8d'], gameForTest);
     return hand.isPossible.should.equal(true);
   });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['4h', 'Th', '5h', 'Ac', '2h', 'Kh', '8d']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(5);
+  });
   return it('should be detected as not possible', function() {
     var hand = new Flush(['4s', 'Th', '5h', 'Ac', '2h', 'Kh', '8d'], gameForTest);
     return hand.isPossible.should.equal(false);
@@ -91,6 +111,10 @@ describe('A Straight', function() {
   it('should be detected as possible', function() {
     var hand = new Straight(['5d', '6s', '7s', '8c', 'Ts', '9s', '2d'], gameForTest);
     return hand.isPossible.should.equal(true);
+  });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['5c', '6s', '3s', '2s', '5s', '4s', '5c']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(5);
   });
   it('should be detected as not possible', function() {
     var hand = new Straight(['5h', '6s', '6h', '7c', '2s', 'Ts', '8d'], gameForTest);
@@ -117,6 +141,10 @@ describe('Three of a Kind', function() {
     hand.isPossible.should.equal(true);
     return hand.toString().should.equal('5c, 5s, 5h, 10d, 9s');
   });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['5c', '5s', '5h', '6c', 'Td', '9s', '2d']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(3);
+  });
   return it('should be detected as not possible', function() {
     var hand = new ThreeOfAKind(['5c', '2h', '5h', '6c', 'Ts', '9s', '2d'], gameForTest);
     return hand.isPossible.should.equal(false);
@@ -128,6 +156,10 @@ describe('Two Pair', function() {
     var hand = new TwoPair(['5c', '5c', '6s', '6c', 'Td', '9s', '2d'], gameForTest);
     return hand.isPossible.should.equal(true);
   });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['5c', '5c', '6s', '6c', 'Td', '9s', '2d']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(4);
+  });
   return it('should be detected as not possible', function() {
     var hand = new TwoPair(['5c', '6s', '6h', '7c', '2d', 'Ts', '8d'], gameForTest);
     return hand.isPossible.should.equal(false);
@@ -138,6 +170,10 @@ describe('One Pair', function() {
   it('should be detected as possible', function() {
     var hand = new OnePair(['5h', '5c', '7s', '6c', 'Ts', '9s', '2d'], gameForTest);
     return hand.isPossible.should.equal(true);
+  });
+  it('sould have a combo', function(){
+    var hand = Hand.solve(['5h', '5c', '7s', '6c', 'Ts', '9s', '2d']);
+    return should(hand).have.property('combo') && hand.combo.should.have.length(2);
   });
   it('should be detected as not possible', function() {
     var hand = new OnePair(['5h', '6s', 'Jh', '7c', '2s', 'Ts', '8d'], gameForTest);

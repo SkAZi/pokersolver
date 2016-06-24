@@ -382,6 +382,7 @@
         var straight = new Straight(possibleStraight, this.game);
         if (straight.isPossible) {
           this.cards = straight.cards;
+          this.combo = this.cards.slice(0, this.game.sfQualify);
           this.cards = this.cards.concat(nonCards);
           this.sfLength = straight.sfLength;
         }
@@ -480,6 +481,7 @@
             wild.wildValue = values[wild.rank];
             this.cards.push(wild);
           }
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-5));
           break;
         }
@@ -542,6 +544,7 @@
               wild.wildValue = values[wild.rank];
               this.cards.push(wild);
             }
+            this.combo = this.cards;
             this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-6));
             break;
           }
@@ -579,6 +582,7 @@
             this.cards.push(wild);
           }
 
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-4));
           break;
         }
@@ -668,6 +672,7 @@
               wild.wildValue = values[wild.rank];
               this.cards.push(wild);
             }
+            this.combo = this.cards;
             this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-4));
             break;
           } else if (this.getNumCardsByRank(i) === 2) {
@@ -749,6 +754,7 @@
               wild.wildValue = values[wild.rank];
               this.cards.push(wild);
             }
+            this.combo = this.cards.slice(0, 5);
             this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-5));
             break;
           }
@@ -784,6 +790,7 @@
       if (this.cards.length >= this.game.sfQualify) {
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + suit + ' High';
         this.sfLength = this.cards.length;
+        this.combo = this.cards.slice(0, this.game.sfQualify);
         if (this.cards.length < this.game.cardsInHand) {
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-this.cards.length));
         }
@@ -831,8 +838,10 @@
           this.descr = this.name + ', Wheel';
           this.sfLength = this.sfQualify;
           if (this.cards[0].value === 'A') {
+            this.combo = this.cards;
             this.cards = this.cards.concat(this.nextHighest().slice(1, this.game.cardsInHand-this.cards.length+1));
           } else {
+            this.combo = this.cards;
             this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-this.cards.length));
           }
           return true;
@@ -870,8 +879,10 @@
         }
         this.cards = this.cards.sort(Card.sort);
       }
+
       if (this.cards.length >= this.game.sfQualify) {
         this.descr = this.name + ', ' + this.cards[0].toString().slice(0, -1) + ' High';
+        this.combo = this.cards.slice(0, this.game.sfQualify);;
         this.cards = this.cards.slice(0, this.game.cardsInHand);
         this.sfLength = this.cards.length;
         if (this.cards.length < this.game.cardsInHand) {
@@ -1017,6 +1028,7 @@
             wild.wildValue = values[wild.rank];
             this.cards.push(wild);
           }
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-6));
           break;
         } else if (this.getNumCardsByRank(i) === 3) {
@@ -1069,6 +1081,7 @@
             wild.wildValue = values[wild.rank];
             this.cards.push(wild);
           }
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-3));
           break;
         }
@@ -1113,6 +1126,7 @@
             wild.wildValue = values[wild.rank];
             this.cards.push(wild);
           }
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-6));
           break;
         } else if (this.cards.length > 0 && this.getNumCardsByRank(i) === 2) {
@@ -1188,6 +1202,7 @@
             wild.wildValue = values[wild.rank];
             this.cards.push(wild);
           }
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-4));
           break;
         } else if (this.getNumCardsByRank(i) === 2) {
@@ -1244,6 +1259,7 @@
             wild.wildValue = values[wild.rank];
             this.cards.push(wild);
           }
+          this.combo = this.cards;
           this.cards = this.cards.concat(this.nextHighest().slice(0, this.game.cardsInHand-2));
           break;
         }
@@ -1282,6 +1298,7 @@
       }
 
       this.cards = this.cards.sort(Card.sort);
+      this.combo = this.cards[0];
       this.descr = this.cards[0].toString().slice(0, -1) + ' High';
 
       return true;
